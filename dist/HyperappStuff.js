@@ -356,18 +356,54 @@ function app(state, actions, view, container) {
   }
 }
 },{}],4:[function(require,module,exports) {
-'use strict';
+"use strict";
 
-var _hyperapp = require('hyperapp');
+var _hyperapp = require("hyperapp");
 
-var view = function view() {
+var state = {
+  count: 0
+};
+
+var actions = {
+  down: function down(value) {
+    return function (state) {
+      return { count: state.count - value };
+    };
+  },
+  up: function up(value) {
+    return function (state) {
+      return { count: state.count + value };
+    };
+  }
+};
+
+var view = function view(state, actions) {
   return (0, _hyperapp.h)(
-    'div',
+    "div",
     null,
-    'hello hyperapp'
+    (0, _hyperapp.h)(
+      "h1",
+      null,
+      state.count
+    ),
+    (0, _hyperapp.h)(
+      "button",
+      { onclick: function onclick() {
+          return actions.down(1);
+        } },
+      "-"
+    ),
+    (0, _hyperapp.h)(
+      "button",
+      { onclick: function onclick() {
+          return actions.up(1);
+        } },
+      "+"
+    )
   );
 };
-(0, _hyperapp.app)({}, {}, view, document.body);
+
+(0, _hyperapp.app)(state, actions, view, document.body);
 },{"hyperapp":8}],6:[function(require,module,exports) {
 
 var global = (1, eval)('this');
